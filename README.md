@@ -14,7 +14,6 @@ A mash-up of tweets, replies and bringing out the worst in a human 🧨.
 The server collects popular tweets and a couple of their replies. Puts the tweets & replies in a big pot and distributes them under the players. The functionalities are the same as Cards Against Humanities.™ but spiced up by randomizing the twitter feed.
 
 ### Screenshots
-![Login screen](/docs/img/login.jpg)
 ![Login screen](/docs/img/Picking_the_cards.jpg)
 
 ### Challenges
