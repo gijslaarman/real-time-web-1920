@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="login">
+        <div class="logo">
+            <h1>
+                Tweets. <br>
+                Against. <br>
+                Twitter. <br>
+            </h1>
+            <p>The perfect entry model for Cards Against Humanity™ for Boomers.</p>
+        </div>
+
+        <form action="/join-room" method="POST">
+            <h2>Before playing..</h2>
+            <fieldset>
+                <p>
+                    Pick a username, and enter the room-pin code to enter your friends game room. Or leave empty to create a new game room.
+                </p>
+                <label>
+                    Pick your username
+                    <input type="text" required name="username">
+                </label>
+                <label class="opaque" id="room-pin">
+                    Enter room pin (optional)
+                    <input type="text" name="roomPin">
+                </label>
+                <p class="twitter-blue">
+                    Possibly a disclaimer, read the <a href="/terms-&-conditions">terms & conditions</a>.
+                </p>
+                <input data="create" type="submit" value="Create new game room">
+                <div id="error-container"></div>
+            </fieldset>
+        </form>
+    </section>
+    <h1>Hoi </h1>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
