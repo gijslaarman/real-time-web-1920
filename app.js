@@ -6,6 +6,7 @@ const io = require('socket.io')(http)
 const generateTwitterHandle = require('username-generator')
 const generatePin = require('./script/generatePin.js')
 const Room = require('./script/Room.js')
+const MongoClient = require('mongodb').MongoClient
 const port = process.env.PORT || 3000
 
 const rooms = []
@@ -93,6 +94,12 @@ io.on('connection', socket => {
     })
 })
 
+// Mongo setup, don't forget to set the mongo uri in your environment/.env 
+const client = new MongoClient(process.env.db_uri, { useNewUrlParser: true, useUnifiedTopology: true })
+
 http.listen(port, () => {
     console.log(`Listening on: ${port}`)
+    client.connect(err => {
+        db = client.db("TAT")
+    })
 })
