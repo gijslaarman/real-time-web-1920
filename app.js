@@ -32,32 +32,57 @@ app.post('/room-check', (req, res) => {
 
 // IO CONNECTION HANDLING.
 io.on('connection', socket => {
+    function createUserObj(username) {
+        return {
+            UUID: socket.id,
+            username,
+            handle: generateTwitterHandle.generateUsername()
+        }
+    }
+
     socket.on('join room', values => {
+        const userObj = createUserObj(values.username)
         const index = rooms.findIndex(room => room.pin === values.roomPin)
-        rooms[index].addPlayer({ UUID: socket.id, username: values.username, handle: generateTwitterHandle.generateUsername() })
+        rooms[index].addPlayer(userObj)
 
         socket.join(values.roomPin)
+        socket.broadcast.to(values.roomPin).emit('user joined', userObj)
+        socket.emit('joining room', rooms[index]) // Send the room details
         console.log(rooms)
     })
 
     socket.on('create new room', values => {
         const generatedPin = generatePin(5)
-        // if (rooms.indexOf(room => room.pin == generatedPin)) // generate new pin.
-        rooms.push(new Room(generatedPin, { UUID: socket.id, username: values.username, handle: generateTwitterHandle.generateUsername() }))
+        const userObj = createUserObj(values.username)
+
+        // !! TODO !! Fetch a bunch load of tweets. 
+
+        // Add room to the array.
+        rooms.push(new Room(generatedPin, userObj))
+
+        // Put socket in the room, and push setup event.
         socket.join(generatedPin)
-        io.to(generatedPin).emit('setup')
+        io.to(generatedPin).emit('setup', generatedPin, userObj)
         console.log(rooms)
     })
 
     socket.on('disconnect', () => {
         let roomIndex
+        let thisUser
+
         rooms.some((room, i) => {
             if (room[socket.id]) {
                 roomIndex = i
+                thisUser = room[socket.id]
                 room.removePlayer(socket.id)
                 return true
             }
         })
+
+        if (thisUser) {
+            console.log(thisUser)
+            socket.broadcast.emit('user left', thisUser)
+        }
 
         if (roomIndex > -1 && rooms[roomIndex].persons < 1) {
             // If the room is now empty remove the room from the array. Array can become empty, thats ok.

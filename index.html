@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section class="login">
+    <section class="login" style="display: none;">
         <div class="logo">
             <h1>
                 Tweets <br>
@@ -44,7 +44,7 @@
         <header>
             <h1>Tweets Against Twitter™</h1>
             <div class="share">
-                <p>Room pin: <button id="game-pin"></button></p>
+                <p id="game-pin">Room pin: </p>
             </div>
         </header>
 
@@ -87,7 +87,17 @@
                 </ul>
             </aside>
             <section class="field">
+                <div class="current-tweet">
+                    <div class="choosers-tweet"></div>
+                </div>
+                <div class="playfield">
 
+                </div>
+                <div id="users">
+                    <article COPY_PIN class="open">
+                        <h5>Invite a friend! Click here to copy a link.</h5>
+                    </article>
+                </div>
             </section>
         </main>
     </section>

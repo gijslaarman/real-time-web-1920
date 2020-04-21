@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Card-is-picked" transform="translate(-824.000000, -890.000000)" fill="#657786" fill-rule="nonzero">
+            <path d="M832,899 C834.484375,899 836.5,896.984375 836.5,894.5 C836.5,892.015625 834.484375,890 832,890 C829.515625,890 827.5,892.015625 827.5,894.5 C827.5,896.984375 829.515625,899 832,899 Z M836,900 L834.278125,900 C833.584375,900.31875 832.8125,900.5 832,900.5 C831.1875,900.5 830.41875,900.31875 829.721875,900 L828,900 C825.790625,900 824,901.790625 824,904 L824,904.5 C824,905.328125 824.671875,906 825.5,906 L838.5,906 C839.328125,906 840,905.328125 840,904.5 L840,904 C840,901.790625 838.209375,900 836,900 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>
