@@ -4,13 +4,11 @@ const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const generateTwitterHandle = require('username-generator')
+const generatePin = require('./script/generatePin.js')
+const Room = require('./script/Room.js')
 const port = process.env.PORT || 3000
 
-const rooms = [{
-    pin: 'abcde',
-    persons: 2,
-    name: null
-}]
+const rooms = []
 
 // Folder for static assets, imgs, scripts & styling.
 app.use(express.static('static'))
@@ -34,16 +32,40 @@ app.post('/room-check', (req, res) => {
 
 // IO CONNECTION HANDLING.
 io.on('connection', socket => {
-    console.log(`${socket.id} just connected!`)
+    socket.on('join room', values => {
+        const index = rooms.findIndex(room => room.pin === values.roomPin)
+        rooms[index].addPlayer({ UUID: socket.id, username: values.username, handle: generateTwitterHandle.generateUsername() })
 
-    socket.on('join room', roomPin => {
-
+        socket.join(values.roomPin)
+        console.log(rooms)
     })
 
-    socket.on('create new room', () => {
-        console.log(socket.id + ' created a new room!')
+    socket.on('create new room', values => {
+        const generatedPin = generatePin(5)
+        // if (rooms.indexOf(room => room.pin == generatedPin)) // generate new pin.
+        rooms.push(new Room(generatedPin, { UUID: socket.id, username: values.username, handle: generateTwitterHandle.generateUsername() }))
+        socket.join(generatedPin)
+        io.to(generatedPin).emit('setup')
+        console.log(rooms)
     })
 
+    socket.on('disconnect', () => {
+        let roomIndex
+        rooms.some((room, i) => {
+            if (room[socket.id]) {
+                roomIndex = i
+                room.removePlayer(socket.id)
+                return true
+            }
+        })
+
+        if (roomIndex > -1 && rooms[roomIndex].persons < 1) {
+            // If the room is now empty remove the room from the array. Array can become empty, thats ok.
+            rooms.splice(roomIndex, 1)
+        }
+
+        console.log(rooms)
+    })
 })
 
 http.listen(port, () => {

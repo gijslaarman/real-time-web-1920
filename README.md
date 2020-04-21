@@ -19,3 +19,6 @@ The server collects popular tweets and a couple of their replies. Puts the tweet
 ### Challenges
 Fully random is not the way to go probably, there will have to be some filters to keep it interesting. Will have to see how it will pan out.
 Does the Twitter API support my idea? Will have to find out.  
+
+### Data Life Cycle
+![Data life cycle of Tweets against Twitter.](/docs/img/DLC.jpg)
