@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section class="login" style="display: ;">
+    <section class="login">
         <div class="logo">
             <h1>
                 Tweets <br>
@@ -49,49 +49,16 @@
         </header>
 
         <main>
+            <div id="before-game-overlay"></div>
             <aside>
                 <h2>My Tweets</h2>
-                <ul id="my-tweets-list">
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                    <li>
-                        <p>I love BBQ!!!! 🍔</p>
-                        <button>Reply</button>
-                    </li>
-                </ul>
+                <ul id="my-cards"></ul>
             </aside>
             <section class="field">
                 <div class="current-tweet">
                     <div class="choosers-tweet"></div>
                 </div>
                 <div class="playfield">
-
                 </div>
                 <div id="users">
                     <article COPY_PIN class="open">
@@ -103,6 +70,6 @@
     </section>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>

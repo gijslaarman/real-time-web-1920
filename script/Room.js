@@ -1,26 +1,25 @@
 class Room {
-    constructor(pin, userObj) {
+    constructor(pin, deck) {
         this.pin = pin
         this.persons = 0
         this.joined = []
-        this.addPlayer(userObj)
+        this.deck = deck
+        this.playfield = []
+        this.in_play = false
+        this.whos_turn = 0
     }
 
     addPlayer(userObj) {
         this.persons++
         this.joined.push(userObj.UUID)
-        this[userObj.UUID] = {
-            UUID: userObj.UUID,
-            username: userObj.username,
-            points: 0,
-            handle: userObj.handle
-        }
+        this[userObj.UUID] = userObj
     }
 
     removePlayer(UUID) {
         this.persons--
         const indexOfPlayer = this.joined.findIndex(player => player === UUID)
         this.joined.splice(indexOfPlayer, 1)
+        this[UUID].cards.forEach(card => this.deck.whiteCards.push(card)) // Add cards back to the game deck.
         delete this[UUID]
     }
 
@@ -32,6 +31,15 @@ class Room {
 
         return playerArray
     }
+
+    addCardToPlayfield(card, UUID) {
+        card.from_player = UUID
+        this.playfield.push(card)
+    }
+
+    emptyPlayfield() {
+        this.playfield = []
+    } 
 }
 
 module.exports = Room

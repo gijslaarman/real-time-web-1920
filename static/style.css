@@ -12,6 +12,7 @@
     --light-20: #E6ECF0;
     --twitter-blue: #1DA1F2;
     --grey: #657786;
+    --shadow: 0 -1px 1px rgba(0, 0, 0, 0.04), 0 2px 2px rgba(0, 0, 0, 0.04), 0 4px 4px rgba(0, 0, 0, 0.04), 0 8px 8px rgba(0, 0, 0, 0.04), 0 16px 16px rgba(0, 0, 0, 0.04);
 }
 
 html, body {
@@ -56,6 +57,21 @@ p {
     top: 8em;
     left: 8em;
     width: 200px;
+    z-index: -1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#before-game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #14171A50;
+    z-index: 999;
 }
 
 form {
@@ -142,7 +158,7 @@ input:focus {
     height: 100%;
 }
 
-header {
+.game > header {
     flex: 0 0 4em;
     background-color: var(--black);
     color: white;
@@ -151,15 +167,15 @@ header {
     justify-content: space-between;
 }
 
-header h1 {
+.game > header h1 {
     font-size: 1.125em;
 }
 
-header p {
+.game > header p {
     margin: 0;
 }
 
-header button {
+.game > header button {
     background-color: unset;
     padding: 0;
     border: none;
@@ -168,13 +184,13 @@ header button {
     position: relative;
 }
 
-header button svg {
+.game > header button svg {
     display: inline-block;
     height: 1em;
     fill: white;
 }
 
-header button:after {
+.game > header button:after {
     position: absolute;
     content: "";
     width: 100%;
@@ -185,11 +201,13 @@ header button:after {
 }
 
 main {
+    position: relative;
     display: flex;
     flex: 1 1 100%;
 }
 
 main aside {
+    position: relative;
     flex: 0 0 28.125em;
     display: flex;
     flex-direction: column;
@@ -206,6 +224,21 @@ aside h2 {
 aside ul {
     flex: 1 1 1em;
     overflow-y: scroll;
+    position: relative;
+}
+
+aside.locked::after {
+    padding: 4em 2em;
+    content: "You don't have to choose a card now!";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    line-height: 100%;
+    color: white;
+    background-color: #14171A90;
 }
 
 aside li {
@@ -252,6 +285,7 @@ aside li button {
 }
 
 .choosers-tweet {
+    padding: 2em;
     height: 12em;
     width: 32em;
     background-color: white;
@@ -260,6 +294,8 @@ aside li button {
 }
 
 .playfield {
+    position: relative;
+    display: flex;
     flex: 1 1 50%;
     margin: 1em;
     border: 1px dashed var(--light-20);
@@ -267,11 +303,74 @@ aside li button {
     border-radius: .75em;
 }
 
+.playfield .card {
+    margin: .5em;
+    width: 12em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 40rem;
+    border-radius: 1em;
+    transition: 300ms transform;
+}
+
+.playfield .card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-5px);
+}
+
+.playfield .card-body {
+    flex: 1;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: 300ms transform;
+    border-radius: 1em;
+}
+
+.playfield.flipped .card-body {
+    transform: rotateY(-180deg);
+}
+
+.card-front, .card-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 1em;
+    padding: 1em;
+    background-color: white;
+    backface-visibility: hidden;
+    box-shadow: var(--shadow);
+}
+
+.card-front {
+    height: 100%;
+    justify-content: center;
+}
+
+.card-back {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    transform: rotateY(-180deg);
+}
+
+.playfield.dont-touch::after {
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
 #users {
     flex: 0 0 1em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
     margin: 1em;
     flex-wrap: wrap;
 }
@@ -289,6 +388,10 @@ aside li button {
     justify-content: center;
     align-items: center;
     border-color: var(--light-20);
+}
+
+#users .picking {
+    border: 2px solid salmon;
 }
 
 #users .text {
@@ -321,4 +424,33 @@ h4.user::before {
 
 [copy_pin]:hover {
     opacity:.75;
+}
+
+.winner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #14171A70;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.winner-overlay p {
+    background-color: white;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+@media (max-width: 70em) {
+    main aside {
+        flex: 0 0 20em;
+    }
+    #users {
+        grid-template-columns: 1fr 1fr;
+    }
 }
