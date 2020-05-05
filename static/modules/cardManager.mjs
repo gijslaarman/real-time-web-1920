@@ -108,7 +108,7 @@ var cardManager = (function() {
 
             if (clientUser == user.UUID) {
                 // If the user is the picker.
-                state.picking = true
+                state.picking = false
                 console.log(state)
                 this.toggleCardHolderLock()
             }
@@ -116,7 +116,7 @@ var cardManager = (function() {
 
         reset() {
             while (playfield.firstChild) playfield.removeChild(playfield.firstChild)
-            
+             
         },
 
         toggleCardHolderLock() {
@@ -133,9 +133,9 @@ var cardManager = (function() {
 
             console.log('Picking State: ' + state.picking)
             if (!state.picking) {
-                playfield.classList.add('dont-touch')
-            } else {
                 playfield.classList.add('choose')
+            } else {
+                playfield.classList.add('dont-touch')
             }
         }
     }

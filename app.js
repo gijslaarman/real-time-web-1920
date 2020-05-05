@@ -23,10 +23,6 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html')
 })
 
-app.get('/get-new-cards', (req, res) => {
-	// Do twitter stuff 
-})
-
 app.post('/room-check', (req, res) => {
 	// Returning a boolean based on if the room exists. So client side won't be able to figure out what rooms exists.
 	// With the boolean the client side knows if to join a room or send an error message.
@@ -77,6 +73,7 @@ io.on('connection', socket => {
 		socket.broadcast.to(pin).emit('user joined', rooms[pin][socket.id])
 		socket.emit('joining room', rooms[pin]) // Send the room details
 		console.log(rooms)
+		console.log(allUsers)
 	})
 
 	socket.on('create new room', values => {
@@ -157,9 +154,6 @@ io.on('connection', socket => {
 
 		io.to(pin).emit('winner chosen', winner)
 	})
-
-
-
 
 	// Disconnecting
 
