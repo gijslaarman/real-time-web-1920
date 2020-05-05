@@ -86,6 +86,7 @@ Game features:
 
 ## Data & Events
 <div id="dlc"></div>
+
 ![Data life cycle of Tweets against Twitter.](/docs/img/DLC.jpg)
 
 Cached data on the server:
